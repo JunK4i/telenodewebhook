@@ -7,6 +7,9 @@ import helmet from 'helmet';
 import compression from 'compression';
 import { getClientIp } from 'request-ip';
 import { Config } from './config';
+import { Telegraf } from "telegraf";
+import dotenv from "dotenv";
+dotenv.config();
 
 export type App = {
     requestListener: RequestListener,
@@ -14,6 +17,8 @@ export type App = {
 }
 
 export const initApp = async (config: Config, logger: pino.Logger): Promise<App> => {
+    const bot = new Telegraf(process.env.BOT_TOKEN!);
+    const port = config.port;
     const app = express();
     app.set("trust proxy", true);
     app.use((req, res, next) => {
@@ -83,6 +88,13 @@ export const initApp = async (config: Config, logger: pino.Logger): Promise<App>
         res.status(500);
         res.json({ msg: "Something went wrong" });
     });
+
+    // Set the bot API endpoint
+    app.use(await bot.createWebhook({ domain: process.env.WEBHOOK_DOMAIN! }));
+
+    bot.on("text", ctx => ctx.reply("Hello"));
+
+    app.listen(port, () => console.log("Listening on port", port));
 
     return {
         requestListener: app,

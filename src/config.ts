@@ -11,7 +11,7 @@ export type Config = {
 export const initConfig = async (): Promise<Config> => {
     return {
         shutdownTimeoutMs: parseInt(process.env.SHUTDOWN_TIMEOUT_MS || "30000"),
-        port: parseInt(process.env.PORT || "3000"),
+        port: parseInt(process.env.PORT || "8443"),
         healthCheckEndpoint: process.env.HEALTH_CHECK_ENDPOINT || "/health",
         env: getEnv(),
         logLevel: process.env.LOG_LEVEL?.toLowerCase() as pino.Level|undefined || "info",
