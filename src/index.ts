@@ -1,4 +1,5 @@
 import { Telegraf, Markup } from "telegraf";
+import { link } from "telegraf/format";
 import dotenv from "dotenv";
 dotenv.config();
 const bot = new Telegraf(process.env.BOT_TOKEN!)
