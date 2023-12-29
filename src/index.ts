@@ -1,11 +1,14 @@
 import { Telegraf, Markup } from "telegraf";
 import { link } from "telegraf/format";
 import dotenv from "dotenv";
+import express from "express";
+
 dotenv.config();
+
+const expressApp = express();
 const bot = new Telegraf(process.env.BOT_TOKEN!)
 
 const WEB_APP_URL = "https://react-frontend-production-bb97.up.railway.app/";
-;
 
 bot.command("start", ctx =>
 	ctx.reply(
@@ -53,3 +56,11 @@ bot
 	.launch({ webhook: { domain: process.env.WEBHOOK_DOMAIN!, port: Number(process.env.PORT) } })
 	.then(() => console.log("Webhook bot listening on port", Number(process.env.PORT)));
 
+expressApp.use(bot.webhookCallback('/secret-path'))
+bot.telegram.setWebhook('https://server.tld:8443/secret-path')
+expressApp.get('/', (req, res) => {
+	res.send('Hello World!')
+	})
+expressApp.listen(3000, () => {
+console.log('Example app listening on port 3000!')
+	})
