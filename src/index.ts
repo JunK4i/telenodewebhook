@@ -56,8 +56,8 @@ bot
 	.launch({ webhook: { domain: process.env.WEBHOOK_DOMAIN!, port: Number(process.env.PORT) } })
 	.then(() => console.log("Webhook bot listening on port", Number(process.env.PORT)));
 
-expressApp.use(bot.webhookCallback('/secret-path'))
-bot.telegram.setWebhook('https://server.tld:8443/secret-path')
+expressApp.use(bot.webhookCallback(process.env.WEBHOOK_PATH!));
+bot.telegram.setWebhook(`https://server.tld:${process.env.PORT}/${process.env.WEBHOOK_PATH!}`)
 expressApp.get('/', (req, res) => {
 	res.send('Hello World!')
 	})
