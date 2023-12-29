@@ -51,9 +51,9 @@ bot.command("keyboard", ctx =>
 	),
 );
 
-bot
-	.launch({ webhook: { domain: process.env.WEBHOOK_DOMAIN!, port: Number(process.env.PORT), hookPath: process.env.BOT_API_PATH!} })
-	.then(() => console.log("Webhook bot listening on port", Number(process.env.PORT)));
+// bot
+// 	.launch({ webhook: { domain: process.env.WEBHOOK_DOMAIN!, port: Number(process.env.PORT), hookPath: process.env.BOT_API_PATH!} })
+// 	.then(() => console.log("Webhook bot listening on port", Number(process.env.PORT)));
 
 expressApp.use(bot.webhookCallback(process.env.BOT_API_PATH!));
 bot.telegram.setWebhook(`${process.env.WEBHOOK_DOMAIN}:${process.env.PORT}/${process.env.BOT_API_PATH!}`)
