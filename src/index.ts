@@ -51,13 +51,13 @@ bot.command("keyboard", ctx =>
 	),
 );
 
-// Start webhook via launch method (preferred)
-bot
-	.launch({ webhook: { domain: process.env.WEBHOOK_DOMAIN!, port: Number(process.env.PORT) } })
-	.then(() => console.log("Webhook bot listening on port", Number(process.env.PORT)));
+// // Start webhook via launch method (preferred)
+// bot
+// 	.launch({ webhook: { domain: process.env.WEBHOOK_DOMAIN!, port: Number(process.env.PORT) } })
+// 	.then(() => console.log("Webhook bot listening on port", Number(process.env.PORT)));
 
-expressApp.use(bot.webhookCallback(process.env.WEBHOOK_DOMAIN!));
-bot.telegram.setWebhook(`https://server.tld:${process.env.PORT}/${process.env.WEBHOOK_DOMAIN!}`)
+expressApp.use(bot.webhookCallback(process.env.BOT_API_PATH!));
+bot.telegram.setWebhook(`https://server.tld:${process.env.PORT}/${process.env.BOT_API_PATH!}`)
 expressApp.get('/', (req, res) => {
 	res.send('Hello World!')
 	})
