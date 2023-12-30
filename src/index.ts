@@ -32,7 +32,7 @@ bot.command("link", ctx =>
 		If provided, it will be passed as start_param in initData
 		and as ?tgWebAppStartParam=$command in the Web App URL
 	*/
-	ctx.reply(link("Launch", "https://t.me/secret_message_game_bot?startapp=$start")),
+	ctx.reply(link("chat_link", "https://t.me/secret_message_game_bot/blablabla?startapp=secret_message_game")),
 );
 
 bot.command("setmenu", ctx =>
