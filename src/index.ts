@@ -125,7 +125,8 @@ expressApp.post('/validate-init', (req, res) => {
 
 
 expressApp.post('/validate-init2', (req, res) => {
-    checkWebAppSignature(process.env.BOT_TOKEN, req.body)
+    const result = checkWebAppSignature(process.env.BOT_TOKEN, req.body)
+    res.send(XPathResult)
 })
 
 function checkWebAppSignature(token:any, initData:any) {
