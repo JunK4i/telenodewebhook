@@ -24,15 +24,7 @@ bot.on("inline_query", ctx =>
 );
 
 bot.command("link", ctx =>
-	/*
-		Go to @Botfather and create a new app for your bot first, using /newapp
-		Then modify this link appropriately.
-	
-		startapp is optional.
-		If provided, it will be passed as start_param in initData
-		and as ?tgWebAppStartParam=$command in the Web App URL
-	*/
-	ctx.reply(link("chat_link", "https://t.me/secret_message_game_bot/blablabla?startapp=secret_message_game")),
+	ctx.reply(link("chat_link", "https://t.me/secret_message_game_bot/miniapp?startapp=secret_message_game")),
 );
 
 bot.command("setmenu", ctx =>
