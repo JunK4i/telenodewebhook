@@ -63,6 +63,8 @@ console.log(`${process.env.WEBHOOK_DOMAIN}:${process.env.PORT}${process.env.BOT_
 expressApp.get('/', (req, res) => {
 	res.send('Hello World!')
 	})
-expressApp.listen(3000, () => {
-console.log('Example app listening on port 3000')
-	})
+	
+const port = process.env.PORT || 3000; // Fallback to 3000 if PORT is not in environment
+expressApp.listen(port, () => {
+	console.log(`Server running on port ${port}`);
+});
