@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import whitelist from "./whitelist";
 
-
 const corsOptions = {
     origin: function (origin: any, callback: any) {
         if (whitelist.includes(origin) || !origin) {
