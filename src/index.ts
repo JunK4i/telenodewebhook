@@ -51,20 +51,27 @@ bot.command("keyboard", ctx =>
 	),
 );
 
+async function setupWebhook(){
+	expressApp.use(await bot.createWebhook({ domain: process.env.WEBHOOK_DOMAIN!, path: process.env.BOT_API_PATH! }));
+}
 
-expressApp.use(bot.webhookCallback(process.env.BOT_API_PATH))
-bot.telegram.setWebhook(`${process.env.WEBHOOK_DOMAIN}:${process.env.PORT}${process.env.BOT_API_PATH}`)
-console.log(`${process.env.WEBHOOK_DOMAIN}:${process.env.PORT}${process.env.BOT_API_PATH}`)
-// bot.telegram.startWebhook(process.env.BOT_API_PATH!, null, Number(process.env.PORT), process.env.WEBHOOK_DOMAIN)
+setupWebhook();
+
+// expressApp.use(bot.webhookCallback(process.env.BOT_API_PATH))
+// bot.telegram.setWebhook(`${process.env.WEBHOOK_DOMAIN}:${process.env.PORT}${process.env.BOT_API_PATH}`)
+// console.log(`${process.env.WEBHOOK_DOMAIN}:${process.env.PORT}${process.env.BOT_API_PATH}`)
 // bot
 // 	.launch({ webhook: { domain: process.env.WEBHOOK_DOMAIN!, port: Number(process.env.PORT), hookPath: process.env.BOT_API_PATH! } })
 // 	.then(() => console.log("Webhook bot listening on port", Number(process.env.PORT)));
 
-expressApp.get('/', (req, res) => {
-	res.send('Hello World!')
-	})
-	
+// expressApp.get('/', (req, res) => {
+// 	res.send('Hello World!')
+// 	})
+
 const port = process.env.PORT || 3000; // Fallback to 3000 if PORT is not in environment
 expressApp.listen(port, () => {
 	console.log(`Server running on port ${port}`);
 });
+
+
+
