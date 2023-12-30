@@ -7,9 +7,13 @@ import { createHmac } from 'node:crypto';
 dotenv.config();
 
 const expressApp = express();
+expressApp.use(express.json()); // for parsing application/json
+expressApp.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+
 const bot = new Telegraf(process.env.BOT_TOKEN!);
 const WEB_APP_URL = 'https://react-frontend-production-bb97.up.railway.app/';
 const PORT = process.env.PORT || 3000; // Fallback to 3000 if PORT is not in environment
+
 
 // Define bot commands
 bot.command('start', (ctx) => {
