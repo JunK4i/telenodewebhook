@@ -5,7 +5,7 @@ import express from "express";
 
 dotenv.config();
 
-// const expressApp = express();
+const expressApp = express();
 const bot = new Telegraf(process.env.BOT_TOKEN!)
 
 const WEB_APP_URL = "https://react-frontend-production-bb97.up.railway.app/";
@@ -53,11 +53,10 @@ bot.command("keyboard", ctx =>
 
 
 
-// expressApp.use(bot.webhookCallback(process.env.BOT_API_PATH));
 // bot.telegram.setWebhook(`${process.env.WEBHOOK_DOMAIN}:${process.env.PORT}/${process.env.BOT_API_PATH!}`)
 // Telegraf.startWebhook(process.env.BOT_API_PATH!, null, Number(process.env.PORT), process.env.WEBHOOK_DOMAIN)
 bot
-	.launch({ webhook: { domain: process.env.WEBHOOK_DOMAIN!, port: Number(process.env.PORT)}, path: process.env.BOT_API_PATH!  })
+	.launch({ webhook: { domain: process.env.WEBHOOK_DOMAIN!, port: Number(process.env.PORT), hookPath: process.env.BOT_API_PATH! } })
 	.then(() => console.log("Webhook bot listening on port", Number(process.env.PORT)));
 // expressApp.get('/', (req, res) => {
 // 	res.send('Hello World!')
