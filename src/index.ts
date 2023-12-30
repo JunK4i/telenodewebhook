@@ -82,8 +82,9 @@ expressApp.post('/validate-init', (req, res) => {
     const hash = HMAC_SHA256(secretKey, dataCheckString).digest('hex');
 
     if (hash === data.get('hash')) {
+		console.log("Validated init", data)
         return res.json(Object.fromEntries(data.entries()));
     }
-
+	console.log("Invalid init", data)
     return res.status(401).json({});
 });
