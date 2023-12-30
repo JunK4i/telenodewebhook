@@ -12,10 +12,11 @@ dotenv.config();
 const expressApp = express();
 // expressApp.use(cors(corsOptions));
 expressApp.use(cors({
-    origin: 'https://react-frontend-production-bb97.up.railway.app'
+    origin: 'https://react-frontend-production-bb97.up.railway.app',
+    credentials: true
   }));
   
-expressApp.use(credentials);
+// expressApp.use(credentials);
 expressApp.use(express.json()); // for parsing application/json
 expressApp.use(express.urlencoded({ extended: false })); 
 expressApp.use(express.text({ type: "text/html" }));
