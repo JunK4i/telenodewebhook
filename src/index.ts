@@ -3,9 +3,7 @@ import { link } from 'telegraf/format';
 import dotenv from 'dotenv';
 import express from 'express';
 import { createHmac } from 'node:crypto';
-import corsOptions from './configs/corsOptions';
 import cors from 'cors';
-import credentials from './middleware/credentials';
 
 dotenv.config();
 
@@ -109,5 +107,7 @@ expressApp.post('/validate-init', (req, res) => {
         return res.json(Object.fromEntries(data.entries()));
     }
 	console.log("Invalid init", data)
+    console.log("Generated hash", hash)
+    console.log("Data hash", data.get('hash'))
     return res.status(401).json({});
 });
