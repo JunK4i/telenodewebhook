@@ -4,6 +4,9 @@ import dotenv from 'dotenv';
 import express from 'express';
 import { createHmac } from 'node:crypto';
 import cors from 'cors';
+import HmacSHA256 from "crypto-js/hmac-sha256";
+import Hex from "crypto-js/enc-hex";
+
 
 dotenv.config();
 
@@ -119,3 +122,33 @@ expressApp.post('/validate-init', (req, res) => {
 //     const secretKey = HMAC_SHA256('WebAppData', process.env.BOT_TOKEN!).digest();
 //     console.log("Secret key", secretKey)
 // });  
+
+
+expressApp.post('/validate-init2', (req, res) => {
+    checkWebAppSignature(process.env.BOT_TOKEN, req.body)
+})
+
+function checkWebAppSignature(token, initData) {
+  // It is not clear from the documentation weather is URL
+  // escaped or not, maybe you will need to uncomment this
+  // initData = decodeURIComponent(initData)
+  // Parse URL Query
+  const q = new URLSearchParams(initData);
+  // Extract the hash
+  const hash = q.get("hash");
+
+  // Re encode in accordance to the documentation. Remember
+  // to remove hash before.
+  q.delete("hash");
+  const v = Array.from(q.entries());
+  v.sort(([aN, aV], [bN, bV]) => aN.localeCompare(bN));
+  const data_chack_string = v.map(([n, v]) => `${n}=${v}`).join("\n");
+
+  // Perform the algorithm provided with the documentation
+  var secret_key = HmacSHA256(token, "WebAppData").toString(Hex);
+  var key = HmacSHA256(data_chack_string, secret_key).toString(Hex);
+
+  console.log(key)
+  console.log(hash)
+  return key === hash;
+}
