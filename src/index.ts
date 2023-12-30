@@ -54,7 +54,6 @@ bot.command("keyboard", ctx =>
 async function setupWebhook(){
 	expressApp.use(await bot.createWebhook({ domain: process.env.WEBHOOK_DOMAIN!, path: process.env.BOT_API_PATH! }));
 }
-
 setupWebhook();
 
 // expressApp.use(bot.webhookCallback(process.env.BOT_API_PATH))
@@ -64,9 +63,9 @@ setupWebhook();
 // 	.launch({ webhook: { domain: process.env.WEBHOOK_DOMAIN!, port: Number(process.env.PORT), hookPath: process.env.BOT_API_PATH! } })
 // 	.then(() => console.log("Webhook bot listening on port", Number(process.env.PORT)));
 
-// expressApp.get('/', (req, res) => {
-// 	res.send('Hello World!')
-// 	})
+expressApp.get('/', (req, res) => {
+	res.send('Hello World!')
+	})
 
 const port = process.env.PORT || 3000; // Fallback to 3000 if PORT is not in environment
 expressApp.listen(port, () => {
