@@ -86,7 +86,7 @@ function HMAC_SHA256(key:Buffer|string, secret:Buffer|string) {
     return createHmac('sha256', key).update(secret);
 }
 
-// Calculate check string
+// Calculate check string - all data excluding hash
 function getCheckString(data:URLSearchParams) {
     const items = [];
     for (const [k, v] of data.entries()) {
@@ -98,16 +98,24 @@ function getCheckString(data:URLSearchParams) {
 // Validate initialization
 expressApp.post('/validate-init', (req, res) => {
     const data = new URLSearchParams(req.body);
+    console.log("hash", data.get('hash'))
     const dataCheckString = getCheckString(data);
     const secretKey = HMAC_SHA256('WebAppData', process.env.BOT_TOKEN!).digest();
     const hash = HMAC_SHA256(secretKey, dataCheckString).digest('hex');
-
+    console.log("Data check string", dataCheckString)
+    console.log("Secret key", secretKey)
     if (hash === data.get('hash')) {
 		console.log("Validated init", data)
         return res.json(Object.fromEntries(data.entries()));
     }
 	console.log("Invalid init", data)
-    console.log("Generated hash", hash)
-    console.log("Data hash", data.get('hash'))
     return res.status(401).json({});
 });
+
+// expressApp.post('test-hash', (req, res) => {
+//     const data = new URLSearchParams(req.body);
+//     const dataCheckString = getCheckString(data);
+//     console.log("Data check string", dataCheckString)
+//     const secretKey = HMAC_SHA256('WebAppData', process.env.BOT_TOKEN!).digest();
+//     console.log("Secret key", secretKey)
+// });  
