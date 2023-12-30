@@ -32,7 +32,7 @@ bot.command("link", ctx =>
 		If provided, it will be passed as start_param in initData
 		and as ?tgWebAppStartParam=$command in the Web App URL
 	*/
-	ctx.reply(link("Launch", "https://t.me/$botname/$appname?startapp=$command")),
+	ctx.reply(link("Launch", "https://t.me/secret_message_game_bot?startapp=$start")),
 );
 
 bot.command("setmenu", ctx =>
@@ -56,21 +56,14 @@ async function setupWebhook(){
 }
 setupWebhook();
 
-// expressApp.use(bot.webhookCallback(process.env.BOT_API_PATH))
-// bot.telegram.setWebhook(`${process.env.WEBHOOK_DOMAIN}:${process.env.PORT}${process.env.BOT_API_PATH}`)
-// console.log(`${process.env.WEBHOOK_DOMAIN}:${process.env.PORT}${process.env.BOT_API_PATH}`)
-// bot
-// 	.launch({ webhook: { domain: process.env.WEBHOOK_DOMAIN!, port: Number(process.env.PORT), hookPath: process.env.BOT_API_PATH! } })
-// 	.then(() => console.log("Webhook bot listening on port", Number(process.env.PORT)));
-
-expressApp.get('/', (req, res) => {
-	res.send('Hello World!')
-	})
-
 const port = process.env.PORT || 3000; // Fallback to 3000 if PORT is not in environment
 expressApp.listen(port, () => {
 	console.log(`Server running on port ${port}`);
 });
+
+expressApp.get('/', (req, res) => {
+	res.send('Hello World!')
+	})
 
 
 
