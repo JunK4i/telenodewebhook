@@ -3,12 +3,26 @@ import { link } from 'telegraf/format';
 import dotenv from 'dotenv';
 import express from 'express';
 import { createHmac } from 'node:crypto';
+import corsOptions from './configs/corsOptions';
+import cors from 'cors';
+import credentials from './middleware/credentials';
 
 dotenv.config();
 
 const expressApp = express();
+expressApp.use(cors(corsOptions));
+expressApp.use(credentials);
 expressApp.use(express.json()); // for parsing application/json
-expressApp.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+expressApp.use(express.urlencoded({ extended: false })); 
+expressApp.use(express.text({ type: "text/html" }));
+
+
+// app.use(credentials);
+// app.use(cors(corsOptions));
+// app.use(express.json());
+// app.use(express.raw({ type: "application/vnd.custom-type" }));
+// app.use(express.text({ type: "text/html" }));
+// app.use(express.urlencoded({ extended: false }));
 
 const bot = new Telegraf(process.env.BOT_TOKEN!);
 const WEB_APP_URL = 'https://react-frontend-production-bb97.up.railway.app/';
