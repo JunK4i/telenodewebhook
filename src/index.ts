@@ -128,7 +128,7 @@ expressApp.post('/validate-init2', (req, res) => {
     checkWebAppSignature(process.env.BOT_TOKEN, req.body)
 })
 
-function checkWebAppSignature(token, initData) {
+function checkWebAppSignature(token:any, initData:any) {
   // It is not clear from the documentation weather is URL
   // escaped or not, maybe you will need to uncomment this
   // initData = decodeURIComponent(initData)
